@@ -29,7 +29,7 @@ public class Credentials {
         }
     }
 
-    public static void loadCredentials() {
+    private static void loadCredentials() {
         try {
             FileReader fileReader = new FileReader("credentials.txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
