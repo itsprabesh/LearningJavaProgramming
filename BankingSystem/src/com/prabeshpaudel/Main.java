@@ -8,16 +8,17 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-//        Credentials myName = new Credentials("Prabesh" , "Paudel");
-//        System.out.println(Credentials.canLogin("Prabesh", "Paudel"));
-//        Credentials myName1 = new Credentials("username1" , "password1");
-//        Credentials myName2 = new Credentials("username2" , "password2");
-//        Credentials.loadCredentials();
-//        System.out.println(Credentials.canLogin("username1", "password1"));
-//        System.out.println(Credentials.canLogin("prabesh", "paudel"));
-        Credentials.changePassword("username1", "password1", "bblabla");
 
-
-
+        Account myAccount = new Account();
+        myAccount.deposit(100.0);
+        myAccount.deposit(23.54);
+        myAccount.withdraw(32.0);
+        myAccount.deposit(34.4);
+        myAccount.withdraw(5.34);
+        myAccount.deposit(109.0);
+        myAccount.withdraw(22.4);
+        System.out.println(myAccount.getBalance());
+        myAccount.printTransactions();
+        System.out.println(myAccount.getAccountNumber());
     }
 }

@@ -8,7 +8,7 @@ public class Account {
     private String name;
     private Credentials credential;
     private double balance;
-    ArrayList<Double> transactions;
+    ArrayList<Double> transactions = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
     private long min = 10000000;
     private long max = 99999999;
@@ -35,6 +35,7 @@ public class Account {
         credential = new Credentials(user, pass1);
         balance = 0;
         this.accountNumber = (int) (Math.random() * ((max - min) + 1)) + min;
+        System.out.println("Your account name is " + this.name + " and the account number is " + this.accountNumber);
     }
 
     public void deposit(double amount) {
@@ -70,5 +71,9 @@ public class Account {
 
     public String getName() {
         return name;
+    }
+
+    public void changePassword(String oldPassword, String newPassword) {
+        credential.changePassword(oldPassword, newPassword);
     }
 }
