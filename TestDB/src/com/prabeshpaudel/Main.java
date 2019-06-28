@@ -1,39 +1,52 @@
 package com.prabeshpaudel;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import com.prabeshpaudel.model.Artist;
+import com.prabeshpaudel.model.Datasource;
+import com.prabeshpaudel.model.SongArtist;
+
+import java.util.List;
 
 public class Main {
-
     public static void main(String[] args) {
-        Connection conn = null;
-        try {
-            String url = "jdbc:sqlite:/Users/prabesh/Desktop/LearningJavaProgramming/TestDB/test.db";
-            // create a connection to the database
-            conn = DriverManager.getConnection(url);
-            Statement statement = conn.createStatement();
-            statement.execute("CREATE TABLE music (name TEXT, phone INTEGER, email TEXT)");
-
-            statement.close();
-            conn.close();
-
-            System.out.println("Connection to SQLite has been established.");
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        Datasource datasource = new Datasource();
+        if(!datasource.open()) {
+            System.out.println("Can't open datasource");
+            return;
         }
 
-/*        try(// create a connection to the database
-            Connection conn = DriverManager.getConnection(url);
-            Statement statement = conn.createStatement()) {
+        List<Artist> artists = datasource.queryArtists(5);
+        if(artists == null) {
+            System.out.println("No artists!");
+            return;
+        }
 
-            statement.execute("CREATE TABLE contacts (name TEXT, phone INTEGER, email TEXT)");
-            System.out.println("Connection to SQLite has been established.");
+        for(Artist artist : artists) {
+            System.out.println("ID = " + artist.getId() + ", Name = " + artist.getName());
+        }
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }*/
+        List<String> albumsForArtist =
+                datasource.queryAlbumsForArtist("Carole King", Datasource.ORDER_BY_ASC);
+
+        for(String album : albumsForArtist) {
+            System.out.println(album);
+        }
+
+        List<SongArtist> songArtists = datasource.queryArtistsForSong("Go Your Own Way", Datasource.ORDER_BY_ASC);
+        if(songArtists == null) {
+            System.out.println("Couldn't find the artist for the song");
+            return;
+        }
+
+        for(SongArtist artist : songArtists) {
+            System.out.println("Artist name = " + artist.getArtistName() +
+                    " Album name = " + artist.getAlbumName() +
+                    " Track = " + artist.getTrack());
+        }
+
+        datasource.querySongsMetadata();
+
+        datasource.close();
     }
 }
+
