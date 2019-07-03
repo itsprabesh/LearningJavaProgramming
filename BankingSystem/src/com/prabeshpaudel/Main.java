@@ -20,5 +20,6 @@ public class Main {
         System.out.println(myAccount.getBalance());
         myAccount.printTransactions();
         System.out.println(myAccount.getAccountNumber());
+        System.out.println("_____________________________")
     }
 }
